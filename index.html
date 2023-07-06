@@ -1,20 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boolzapp con Vue</title>
-  <!-- VUEJS -->
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <!-- AXIOS -->
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
-  <!-- FONTAWESOME -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FONT-AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- VUEJS -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <title>Boolzapp</title>
 </head>
 <body>
+    <div id="app">
+        <div class="container d-flex">
+                <!-- ASIDE -->
+          <div class="aside">
+            <div class="top-bar d-flex my-cont-bet">
+              <div class="user d-flex al-item-cent">
+                <img src="img/avatar_io.jpg" alt="User Avatar">
+                <span class="name-user">Sofia</span>
+              </div>
+              <div class="icon-user d-flex al-item-cent">
+                <i class="fas fa-circle-notch"></i>
+                <i class="fas fa-message"></i>
+                <i class="fas fa-ellipsis-vertical"></i>
+              </div>
+            </div>
     
+            <div class="utility-search">
+              <!-- NOTIFICATIONS -->
+              <div class="banner-notify d-flex al-item-cent">
+                <i class="fas fa-bell-slash"></i>
+                <div class="notify-info">
+                  <div>Ricevi notifiche di nuovi messaggi</div>
+                  <div>Attiva notifiche desktop</div>
+                </div>
+              </div>
+    
+              <!-- SEARCH BAR -->
+              <div class="search-bar d-flex al-item-cent">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Cerca o Inizia una nuova chat">
+              </div>
+            </div>
+    
+            <div class="list-contact">
+              <ul>
+                <li class="d-flex al-item-cent" v-for="contact in contacts">
+                  <div class="user">
+                    <img :src="contact.avatar" alt="Contact Avatar">
+                  </div>
+                  <div class="info-user">
+                    <div>{{contact.name}}</div>
+                    <div v-for="(lastMessage, index) in contact.messages" class="last-message">
+                      <div v-if="index === contact.messages.length -1">{{lastMessage.message}}</div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+    
+                <!-- MAIN -->
+          <div class="main">
+            <div class="top-bar d-flex my-cont-bet">
+              <div class="user active d-flex al-item-cent">
+                <img src="img/avatar_1.jpg" alt="User Avatar">
+                <div class="info-user">
+                  <div class="name-user">Michele</div>
+                  <div class="inf-access">Ultimo accesso oggi alle 12:00</div>
+                </div>
+              </div>
+              <div class="icon-user d-flex al-item-cent">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-paperclip"></i>
+                <i class="fas fa-ellipsis-vertical"></i>
+              </div>
+            </div>
+    
+            <div class="main-chat d-flex flex-dir-col">
+              <div class="mess-sent d-flex my-cont-end">
+                <p>Hai portato a spasso il cane?</p>
+              </div>
+              <div class="mess-sent d-flex my-cont-end">
+                <p>Ricordati di stendere i panni</p>
+              </div>
+              <div class="mess-received d-flex my-cont-start">
+                <p>Tutto Fatto!</p>
+              </div>
+            </div>
+    
+            <div class="foot-chat d-flex my-cont-aro al-item-cent">
+              <i class="far fa-face-smile"></i>
+              <input type="text" placeholder="Scrivi un messaggio">
+              <i class="fas fa-microphone"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+  
   <script src="script.js"></script>
 </body>
 </html>
