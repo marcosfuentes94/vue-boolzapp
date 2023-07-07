@@ -186,7 +186,9 @@ margin-bottom: 10px;
 .mess-sent p {
 background-color: #D5F9BA;
 border-radius: 10px 0 10px 10px;
+margin-left: 500px;
 }
+
 
 .mess-received p {
 background-color: white;

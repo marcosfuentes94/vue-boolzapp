@@ -167,7 +167,9 @@ contacts: [
     ],
 }
 ],
-}
-}
-
-}).mount("#app")
+selectedContact: null,
+};
+},mounted() {
+    this.selectedContact = this.contacts.find(contact => contact.name === 'Michele');
+  }
+}).mount("#app");

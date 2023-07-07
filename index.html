@@ -17,93 +17,85 @@
     <title>Boolzapp</title>
 </head>
 <body>
-    <div id="app">
-        <div class="container d-flex">
-                <!-- ASIDE -->
-          <div class="aside">
+  <div id="app">
+    <div class="container d-flex">
+        <!-- ASIDE -->
+        <div class="aside">
             <div class="top-bar d-flex my-cont-bet">
-              <div class="user d-flex al-item-cent">
-                <img src="img/avatar_io.jpg" alt="User Avatar">
-                <span class="name-user">Sofia</span>
-              </div>
-              <div class="icon-user d-flex al-item-cent">
-                <i class="fas fa-circle-notch"></i>
-                <i class="fas fa-message"></i>
-                <i class="fas fa-ellipsis-vertical"></i>
-              </div>
+                <div class="user d-flex al-item-cent">
+                    <img src="img/avatar_io.jpg" alt="User Avatar">
+                    <span class="name-user">Sofia</span>
+                </div>
+                <div class="icon-user d-flex al-item-cent">
+                    <i class="fas fa-circle-notch"></i>
+                    <i class="fas fa-message"></i>
+                    <i class="fas fa-ellipsis-vertical"></i>
+                </div>
             </div>
-    
+
             <div class="utility-search">
-              <!-- NOTIFICATIONS -->
-              <div class="banner-notify d-flex al-item-cent">
-                <i class="fas fa-bell-slash"></i>
-                <div class="notify-info">
-                  <div>Ricevi notifiche di nuovi messaggi</div>
-                  <div>Attiva notifiche desktop</div>
-                </div>
-              </div>
-    
-              <!-- SEARCH BAR -->
-              <div class="search-bar d-flex al-item-cent">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Cerca o Inizia una nuova chat">
-              </div>
-            </div>
-    
-            <div class="list-contact">
-              <ul>
-                <li class="d-flex al-item-cent" v-for="contact in contacts">
-                  <div class="user">
-                    <img :src="contact.avatar" alt="Contact Avatar">
-                  </div>
-                  <div class="info-user">
-                    <div>{{contact.name}}</div>
-                    <div v-for="(lastMessage, index) in contact.messages" class="last-message">
-                      <div v-if="index === contact.messages.length -1">{{lastMessage.message}}</div>
+                <!-- NOTIFICATIONS -->
+                <div class="banner-notify d-flex al-item-cent">
+                    <i class="fas fa-bell-slash"></i>
+                    <div class="notify-info">
+                        <div>Ricevi notifiche di nuovi messaggi</div>
+                        <div>Attiva notifiche desktop</div>
                     </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-    
-                <!-- MAIN -->
-          <div class="main">
-            <div class="top-bar d-flex my-cont-bet">
-              <div class="user active d-flex al-item-cent">
-                <img src="img/avatar_1.jpg" alt="User Avatar">
-                <div class="info-user">
-                  <div class="name-user">Michele</div>
-                  <div class="inf-access">Ultimo accesso oggi alle 12:00</div>
                 </div>
-              </div>
-              <div class="icon-user d-flex al-item-cent">
-                <i class="fas fa-search"></i>
-                <i class="fas fa-paperclip"></i>
-                <i class="fas fa-ellipsis-vertical"></i>
-              </div>
+
+                <!-- SEARCH BAR -->
+                <div class="search-bar d-flex al-item-cent">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Cerca o Inizia una nuova chat">
+                </div>
             </div>
-    
-            <div class="main-chat d-flex flex-dir-col">
-              <div class="mess-sent d-flex my-cont-end">
-                <p>Hai portato a spasso il cane?</p>
-              </div>
-              <div class="mess-sent d-flex my-cont-end">
-                <p>Ricordati di stendere i panni</p>
-              </div>
-              <div class="mess-received d-flex my-cont-start">
-                <p>Tutto Fatto!</p>
-              </div>
+
+            <div class="list-contact">
+                <ul>
+                    <li class="d-flex al-item-cent" v-for="(contact, index) in contacts" :key="index" @click="selectedContact = contact">
+                        <div class="user">
+                            <img :src="contact.avatar" alt="Contact Avatar">
+                        </div>
+                        <div class="info-user">
+                            <div>{{contact.name}}</div>
+                            <div class="last-message" v-if="contact.messages.length > 0">{{contact.messages[contact.messages.length - 1].message}}</div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-    
-            <div class="foot-chat d-flex my-cont-aro al-item-cent">
-              <i class="far fa-face-smile"></i>
-              <input type="text" placeholder="Scrivi un messaggio">
-              <i class="fas fa-microphone"></i>
-            </div>
-          </div>
         </div>
-      </div>
+
+        <!-- MAIN -->
+        <div class="main" v-if="selectedContact">
+            <div class="top-bar d-flex my-cont-bet">
+                <div class="user active d-flex al-item-cent">
+                    <img :src="selectedContact.avatar" alt="User Avatar">
+                    <div class="info-user">
+                        <div class="name-user">{{selectedContact.name}}</div>
+                        <div class="inf-access">Ultimo accesso oggi alle 12:00</div>
+                    </div>
+                </div>
+                <div class="icon-user d-flex al-item-cent">
+                    <i class="fas fa-search"></i>
+                    <i class="fas fa-paperclip"></i>
+                    <i class="fas fa-ellipsis-vertical"></i>
+                </div>
+            </div>
+
+            <div class="main-chat d-flex flex-dir-col">
+              <div v-for="(message, index) in selectedContact.messages" :key="index" :class="{'mess-sent': message.status === 'sent', 'mess-received': message.status === 'received'}" class="message">
+                  <p>{{message.message}}</p>
+              </div>
+          </div>
+
+            <div class="foot-chat d-flex my-cont-aro al-item-cent">
+                <i class="far fa-face-smile"></i>
+                <input type="text" placeholder="Scrivi un messaggio">
+                <i class="fas fa-microphone"></i>
+            </div>
+        </div>
+    </div>
+</div>
   
   <script src="script.js"></script>
 </body>
