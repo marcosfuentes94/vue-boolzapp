@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- VUEJS -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- LUXON -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.3.0/luxon.min.js" integrity="sha512-KKbQg5o92MwtJKR9sfm/HkREzfyzNMiKPIQ7i7SZOxwEdiNCm4Svayn2DBq7MKEdrqPJUOSIpy1v6PpFlCQ0YA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,13 +86,13 @@
 
             <div class="main-chat d-flex flex-dir-col">
               <div v-for="(message, index) in selectedContact.messages" :key="index" :class="{'mess-sent': message.status === 'sent', 'mess-received': message.status === 'received'}" class="message">
-                  <p>{{message.message}}</p>
+                <p>{{ message.message }} <span class="message-time">{{ getFormattedTime(message.date) }}</span></p>
               </div>
-          </div>
+            </div>
 
             <div class="foot-chat d-flex my-cont-aro al-item-cent">
                 <i class="far fa-face-smile"></i>
-                <input type="text" placeholder="Scrivi un messaggio">
+                <input type="text" placeholder="Scrivi un messaggio" v-model="newMessage" @keyup.enter.prevent="sendMessage">
                 <i class="fas fa-microphone"></i>
             </div>
         </div>

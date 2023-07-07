@@ -187,12 +187,21 @@ margin-bottom: 10px;
 background-color: #D5F9BA;
 border-radius: 10px 0 10px 10px;
 margin-left: 500px;
+position: relative;
 }
 
 
 .mess-received p {
 background-color: white;
 border-radius: 10px 10px 10px 0;
+position: relative;
+}
+.message-time{
+font-size: 9px;
+position: absolute;
+right: 10px;
+bottom: 5px;
+color: #888;
 }
 
 .foot-chat i {

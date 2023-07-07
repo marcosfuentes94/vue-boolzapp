@@ -1,7 +1,6 @@
 const {createApp} = Vue;
-
+const { DateTime } = luxon;
 createApp({
-
 data(){
 return{
 contacts: [
@@ -107,7 +106,7 @@ contacts: [
 },
 {
     name: 'Claudia',
-    avatar: './img/avatar_5.jpg',
+    avatar: './img/avatar_6.jpg',
     visible: true,
     messages: [
         {
@@ -168,8 +167,43 @@ contacts: [
 }
 ],
 selectedContact: null,
-};
-},mounted() {
+newMessage: '' 
+    };
+  },
+  methods: {
+    sendMessage() {
+        if (this.newMessage.trim() !== '') {
+          const currentDate = DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss');
+          const newSentMessage = {
+            date: currentDate,
+            message: this.newMessage.trim(),
+            status: 'sent'
+          };
+          this.selectedContact.messages.push(newSentMessage);
+
+        
+        const randomResponses = ["Va bene dai fammi sapere", "Capito!", "Ok", "Perfetto!", "Sul serio?"];
+
+       
+        setTimeout(() => {
+      const randomIndex = Math.floor(Math.random() * randomResponses.length);
+      const newReceivedMessage = {
+        date: DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss'),
+        message: randomResponses[randomIndex],
+        status: 'received'
+      };
+      this.selectedContact.messages.push(newReceivedMessage);
+    }, 1000);
+
+        this.newMessage = ''; 
+      }
+    },
+    getFormattedTime(date) {
+      const dateTime = DateTime.fromFormat(date, 'dd/MM/yyyy HH:mm:ss');
+      return dateTime.toFormat('HH:mm');
+    }
+  },
+  mounted() {
     this.selectedContact = this.contacts.find(contact => contact.name === 'Michele');
   }
 }).mount("#app");
