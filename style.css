@@ -12,10 +12,13 @@ font-family: 'Poppins', sans-serif;
 .d-flex { display: flex; }
 .my-cont-aro { justify-content: space-around; }
 .my-cont-bet { justify-content: space-between; }
-.al-item-cent { align-items: center; }
 .my-cont-start { justify-content: flex-start; }
 .my-cont-end { justify-content: flex-end; }
 .flex-dir-col { flex-direction: column; }
+.al-item-cent { 
+    align-items: center; 
+    position: relative;
+}
 
 /*STRUTTURA */
 #app {
@@ -157,6 +160,7 @@ font-size: .8rem;
 font-weight: 500;
 font-size: .7rem;
 color: grey;
+position: relative;
 }
 
 /* MAIN */
@@ -203,6 +207,13 @@ position: absolute;
 right: 5px;
 bottom: 1px;
 color: #888;
+}
+.message-time-2{
+font-size: 9px;
+color: #646464;
+position: absolute;
+top: 10px;
+right: 5px;
 }
 
 .foot-chat i {

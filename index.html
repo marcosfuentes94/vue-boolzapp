@@ -56,7 +56,10 @@
           <ul>
             <li class="d-flex al-item-cent" v-for="(contact, index) in filteredContacts" :key="index" @click="selectedContact = contact">
               <div class="user">
-                <img :src="contact.avatar" alt="Contact Avatar">
+                <img :src="contact.avatar" alt="Contact Avatar"> 
+              </div>
+              <div>
+                <span class="message-time-2">{{ getFormattedTime(contact.messages[contact.messages.length - 1].date) }}</span>
               </div>
               <div class="info-user">
                 <div>{{contact.name}}</div>
