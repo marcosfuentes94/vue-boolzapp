@@ -16,8 +16,8 @@ font-family: 'Poppins', sans-serif;
 .my-cont-end { justify-content: flex-end; }
 .flex-dir-col { flex-direction: column; }
 .al-item-cent { 
-    align-items: center; 
-    position: relative;
+align-items: center; 
+position: relative;
 }
 
 /*STRUTTURA */
@@ -251,4 +251,45 @@ border-radius: 4px;
 
 ::-webkit-scrollbar-thumb:hover {
 background-color: #555;
+}
+
+.message-actions {
+position: relative;
+cursor:pointer;
+}
+
+.message-actions i {
+cursor: pointer;
+}
+
+.message-options {
+position: absolute;
+top: calc(100% + 5px);
+min-width: 120px;
+background-color: white;
+border: 1px solid lightgray;
+border-radius: 4px;
+padding: 8px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+z-index: 1;
+}
+
+.message-options div {
+cursor: pointer;
+padding: 6px 12px;
+font-size: 0.9rem;
+}
+
+.message-options div:hover {
+background-color: lightgray;
+}
+.chev-down{
+position: absolute;
+right: 10px;
+top: 12px;
+font-size: 10px;
+cursor: pointer;
+color: #888;
+padding: 15px;
+margin-right: 5px;
 }

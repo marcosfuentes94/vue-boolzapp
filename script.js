@@ -174,7 +174,7 @@ searchText: ''
 computed: {
 filteredContacts() {
   if (!this.searchText) {
-    return this.contacts; // Nessuna ricerca, restituisci tutti i contatti
+    return this.contacts; // NESSUNA RICERCA, RESTITUISCI TUTTI I CONTATTI
   }
   const searchTerm = this.searchText.toLowerCase();
   return this.contacts.filter(contact =>
@@ -183,37 +183,47 @@ filteredContacts() {
 }
 },
 methods: {
-sendMessage() {
-  if (this.newMessage.trim() !== '') {
-    const currentDate = DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss');
-    const newSentMessage = {
-      date: currentDate,
-      message: this.newMessage.trim(),
-      status: 'sent'
-    };
-    this.selectedContact.messages.push(newSentMessage);
+    sendMessage() {
+      if (this.newMessage.trim() !== '') {
+        const currentDate = DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss');
+        const newSentMessage = {
+          date: currentDate,
+          message: this.newMessage.trim(),
+          status: 'sent',
+          showOptions: false // AGGIUNGIAMO UNA PROPRIETÀ SHOWOPTIONS AL MESSAGGIO
+        };
+        this.selectedContact.messages.push(newSentMessage);
 
-    const randomResponses = ["Va bene dai fammi sapere", "Capito!", "Ok", "Perfetto!", "Sul serio?"];
+        const randomResponses = ["Va bene dai fammi sapere", "Capito!", "Ok", "Perfetto!", "Sul serio?"];
 
-    setTimeout(() => {
-      const randomIndex = Math.floor(Math.random() * randomResponses.length);
-      const newReceivedMessage = {
-        date: DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss'),
-        message: randomResponses[randomIndex],
-        status: 'received'
-      };
-      this.selectedContact.messages.push(newReceivedMessage);
-    }, 1000);
+        setTimeout(() => {
+          const randomIndex = Math.floor(Math.random() * randomResponses.length);
+          const newReceivedMessage = {
+            date: DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss'),
+            message: randomResponses[randomIndex],
+            status: 'received',
+            showOptions: false // AGGIUNGIAMO UNA PROPRIETÀ SHOWOPTIONS AL MESSAGGIO
+          };
+          this.selectedContact.messages.push(newReceivedMessage);
+        }, 1000);
 
-    this.newMessage = '';
+        this.newMessage = '';
+      }
+    },
+    getFormattedTime(date) {
+      const dateTime = DateTime.fromFormat(date, 'dd/MM/yyyy HH:mm:ss');
+      return dateTime.toFormat('HH:mm');
+    },
+    toggleMessageOptions(index) {
+      // FUNZIONE PER MOSTRARE/NASCONDERE LE OPZIONI DEL MESSAGGIO
+      this.selectedContact.messages[index].showOptions = !this.selectedContact.messages[index].showOptions;
+    },
+    deleteMessage(index) {
+      // FUNZIONE PER ELIMINARE IL MESSAGGIO
+      this.selectedContact.messages.splice(index, 1);
+    }
+  },
+  mounted() {
+    this.selectedContact = this.contacts.find(contact => contact.name === 'Michele');
   }
-},
-getFormattedTime(date) {
-  const dateTime = DateTime.fromFormat(date, 'dd/MM/yyyy HH:mm:ss');
-  return dateTime.toFormat('HH:mm');
-}
-},
-mounted() {
-this.selectedContact = this.contacts.find(contact => contact.name === 'Michele');
-}
 }).mount("#app");
