@@ -167,25 +167,35 @@ contacts: [
 }
 ],
 selectedContact: null,
-newMessage: '' 
+newMessage: '',
+searchText: ''
+};
+},
+computed: {
+filteredContacts() {
+  if (!this.searchText) {
+    return this.contacts; // Nessuna ricerca, restituisci tutti i contatti
+  }
+  const searchTerm = this.searchText.toLowerCase();
+  return this.contacts.filter(contact =>
+    contact.name.toLowerCase().includes(searchTerm)
+  );
+}
+},
+methods: {
+sendMessage() {
+  if (this.newMessage.trim() !== '') {
+    const currentDate = DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss');
+    const newSentMessage = {
+      date: currentDate,
+      message: this.newMessage.trim(),
+      status: 'sent'
     };
-  },
-  methods: {
-    sendMessage() {
-        if (this.newMessage.trim() !== '') {
-          const currentDate = DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss');
-          const newSentMessage = {
-            date: currentDate,
-            message: this.newMessage.trim(),
-            status: 'sent'
-          };
-          this.selectedContact.messages.push(newSentMessage);
+    this.selectedContact.messages.push(newSentMessage);
 
-        
-        const randomResponses = ["Va bene dai fammi sapere", "Capito!", "Ok", "Perfetto!", "Sul serio?"];
+    const randomResponses = ["Va bene dai fammi sapere", "Capito!", "Ok", "Perfetto!", "Sul serio?"];
 
-       
-        setTimeout(() => {
+    setTimeout(() => {
       const randomIndex = Math.floor(Math.random() * randomResponses.length);
       const newReceivedMessage = {
         date: DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss'),
@@ -195,15 +205,15 @@ newMessage: ''
       this.selectedContact.messages.push(newReceivedMessage);
     }, 1000);
 
-        this.newMessage = ''; 
-      }
-    },
-    getFormattedTime(date) {
-      const dateTime = DateTime.fromFormat(date, 'dd/MM/yyyy HH:mm:ss');
-      return dateTime.toFormat('HH:mm');
-    }
-  },
-  mounted() {
-    this.selectedContact = this.contacts.find(contact => contact.name === 'Michele');
+    this.newMessage = '';
   }
+},
+getFormattedTime(date) {
+  const dateTime = DateTime.fromFormat(date, 'dd/MM/yyyy HH:mm:ss');
+  return dateTime.toFormat('HH:mm');
+}
+},
+mounted() {
+this.selectedContact = this.contacts.find(contact => contact.name === 'Michele');
+}
 }).mount("#app");

@@ -108,6 +108,7 @@ cursor: pointer;
 .utility-search .search-bar {
 background-color: #F9F9F9;
 height: 53px;
+margin-right: 10px;
 }
 
 .utility-search .search-bar input {
@@ -199,8 +200,8 @@ position: relative;
 .message-time{
 font-size: 9px;
 position: absolute;
-right: 10px;
-bottom: 5px;
+right: 5px;
+bottom: 1px;
 color: #888;
 }
 

@@ -21,83 +21,83 @@
 <body>
   <div id="app">
     <div class="container d-flex">
-        <!-- ASIDE -->
-        <div class="aside">
-            <div class="top-bar d-flex my-cont-bet">
-                <div class="user d-flex al-item-cent">
-                    <img src="img/avatar_io.jpg" alt="User Avatar">
-                    <span class="name-user">Sofia</span>
-                </div>
-                <div class="icon-user d-flex al-item-cent">
-                    <i class="fas fa-circle-notch"></i>
-                    <i class="fas fa-message"></i>
-                    <i class="fas fa-ellipsis-vertical"></i>
-                </div>
-            </div>
-
-            <div class="utility-search">
-                <!-- NOTIFICATIONS -->
-                <div class="banner-notify d-flex al-item-cent">
-                    <i class="fas fa-bell-slash"></i>
-                    <div class="notify-info">
-                        <div>Ricevi notifiche di nuovi messaggi</div>
-                        <div>Attiva notifiche desktop</div>
-                    </div>
-                </div>
-
-                <!-- SEARCH BAR -->
-                <div class="search-bar d-flex al-item-cent">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Cerca o Inizia una nuova chat">
-                </div>
-            </div>
-
-            <div class="list-contact">
-                <ul>
-                    <li class="d-flex al-item-cent" v-for="(contact, index) in contacts" :key="index" @click="selectedContact = contact">
-                        <div class="user">
-                            <img :src="contact.avatar" alt="Contact Avatar">
-                        </div>
-                        <div class="info-user">
-                            <div>{{contact.name}}</div>
-                            <div class="last-message" v-if="contact.messages.length > 0">{{contact.messages[contact.messages.length - 1].message}}</div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+      <!-- ASIDE -->
+      <div class="aside">
+        <div class="top-bar d-flex my-cont-bet">
+          <div class="user d-flex al-item-cent">
+            <img src="img/avatar_io.jpg" alt="User Avatar">
+            <span class="name-user">Sofia</span>
+          </div>
+          <div class="icon-user d-flex al-item-cent">
+            <i class="fas fa-circle-notch"></i>
+            <i class="fas fa-message"></i>
+            <i class="fas fa-ellipsis-vertical"></i>
+          </div>
         </div>
 
-        <!-- MAIN -->
-        <div class="main" v-if="selectedContact">
-            <div class="top-bar d-flex my-cont-bet">
-                <div class="user active d-flex al-item-cent">
-                    <img :src="selectedContact.avatar" alt="User Avatar">
-                    <div class="info-user">
-                        <div class="name-user">{{selectedContact.name}}</div>
-                        <div class="inf-access">Ultimo accesso oggi alle 12:00</div>
-                    </div>
-                </div>
-                <div class="icon-user d-flex al-item-cent">
-                    <i class="fas fa-search"></i>
-                    <i class="fas fa-paperclip"></i>
-                    <i class="fas fa-ellipsis-vertical"></i>
-                </div>
+        <div class="utility-search">
+          <!-- NOTIFICATIONS -->
+          <div class="banner-notify d-flex al-item-cent">
+            <i class="fas fa-bell-slash"></i>
+            <div class="notify-info">
+              <div>Ricevi notifiche di nuovi messaggi</div>
+              <div>Attiva notifiche desktop</div>
             </div>
+          </div>
 
-            <div class="main-chat d-flex flex-dir-col">
-              <div v-for="(message, index) in selectedContact.messages" :key="index" :class="{'mess-sent': message.status === 'sent', 'mess-received': message.status === 'received'}" class="message">
-                <p>{{ message.message }} <span class="message-time">{{ getFormattedTime(message.date) }}</span></p>
+          <!-- SEARCH BAR -->
+          <div class="search-bar d-flex al-item-cent">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Cerca o Inizia una nuova chat" v-model="searchText">
+          </div>
+        </div>
+
+        <div class="list-contact">
+          <ul>
+            <li class="d-flex al-item-cent" v-for="(contact, index) in filteredContacts" :key="index" @click="selectedContact = contact">
+              <div class="user">
+                <img :src="contact.avatar" alt="Contact Avatar">
               </div>
-            </div>
-
-            <div class="foot-chat d-flex my-cont-aro al-item-cent">
-                <i class="far fa-face-smile"></i>
-                <input type="text" placeholder="Scrivi un messaggio" v-model="newMessage" @keyup.enter.prevent="sendMessage">
-                <i class="fas fa-microphone"></i>
-            </div>
+              <div class="info-user">
+                <div>{{contact.name}}</div>
+                <div class="last-message" v-if="contact.messages.length > 0">{{contact.messages[contact.messages.length - 1].message}}</div>
+              </div>
+            </li>
+          </ul>
         </div>
+      </div>
+
+      <!-- MAIN -->
+      <div class="main" v-if="selectedContact">
+        <div class="top-bar d-flex my-cont-bet">
+          <div class="user active d-flex al-item-cent">
+            <img :src="selectedContact.avatar" alt="User Avatar">
+            <div class="info-user">
+              <div class="name-user">{{selectedContact.name}}</div>
+              <div class="inf-access">Ultimo accesso oggi alle 12:00</div>
+            </div>
+          </div>
+          <div class="icon-user d-flex al-item-cent">
+            <i class="fas fa-search"></i>
+            <i class="fas fa-paperclip"></i>
+            <i class="fas fa-ellipsis-vertical"></i>
+          </div>
+        </div>
+
+        <div class="main-chat d-flex flex-dir-col">
+          <div v-for="(message, index) in selectedContact.messages" :key="index" :class="{'mess-sent': message.status === 'sent', 'mess-received': message.status === 'received'}" class="message">
+            <p>{{ message.message }} <span class="message-time">{{ getFormattedTime(message.date) }}</span></p>
+          </div>
+        </div>
+
+        <div class="foot-chat d-flex my-cont-aro al-item-cent">
+          <i class="far fa-face-smile"></i>
+          <input type="text" placeholder="Scrivi un messaggio" v-model="newMessage" @keyup.enter.prevent="sendMessage">
+          <i class="fas fa-microphone"></i>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
   
   <script src="script.js"></script>
 </body>
