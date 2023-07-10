@@ -168,7 +168,7 @@ contacts: [
 ],
 selectedContact: null,
 newMessage: '',
-searchText: ''
+searchText: '',
 };
 },
 computed: {
@@ -190,7 +190,7 @@ methods: {
           date: currentDate,
           message: this.newMessage.trim(),
           status: 'sent',
-          showOptions: false // AGGIUNGIAMO UNA PROPRIETÀ SHOWOPTIONS AL MESSAGGIO
+          showOptions: false // AGGIUNGIAMO UNA PROPRIETÀ SHOW OPTIONS AL MESSAGGIO
         };
         this.selectedContact.messages.push(newSentMessage);
 
@@ -202,7 +202,7 @@ methods: {
             date: DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss'),
             message: randomResponses[randomIndex],
             status: 'received',
-            showOptions: false // AGGIUNGIAMO UNA PROPRIETÀ SHOWOPTIONS AL MESSAGGIO
+            showOptions: false // AGGIUNGIAMO UNA PROPRIETÀ SHOW OPTIONS AL MESSAGGIO
           };
           this.selectedContact.messages.push(newReceivedMessage);
         }, 1000);
@@ -219,9 +219,24 @@ methods: {
       this.selectedContact.messages[index].showOptions = !this.selectedContact.messages[index].showOptions;
     },
     deleteMessage(index) {
-      // FUNZIONE PER ELIMINARE IL MESSAGGIO
-      this.selectedContact.messages.splice(index, 1);
-    }
+        this.selectedContact.messages.splice(index, 1);
+        
+        // VERIFICA SE LA CONVERSAZIONE SELEZIONATA NON HA PIÙ MESSAGGI
+        if (this.selectedContact.messages.length === 0) {
+          // RIMUOVI LA CONVERSAZIONE SELEZIONATA
+          const selectedIndex = this.contacts.findIndex(contact => contact.name === this.selectedContact.name);
+          this.contacts.splice(selectedIndex, 1);
+          
+          // SE CI SONO ALTRE CONVERSAZIONI, SELEZIONA LA PRIMA CONVERSAZIONe
+          if (this.contacts.length > 0) {
+            this.selectedContact = this.contacts[0];
+          } else {
+            // ALTRIMENTI, IMPOSTA SELECTEDCONTACT SU NULL PER NASCONDERE IL BLOCCO DI CHAT PRINCIPALE
+            this.selectedContact = null;
+          }
+        }
+      }
+      
   },
   mounted() {
     this.selectedContact = this.contacts.find(contact => contact.name === 'Michele');

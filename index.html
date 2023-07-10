@@ -71,7 +71,7 @@
       </div>
 
       <!-- MAIN -->
-      <div class="main" v-if="selectedContact">
+      <div class="main" v-if="selectedContact && selectedContact.messages.length > 0">
         <div class="top-bar d-flex my-cont-bet">
           <div class="user active d-flex al-item-cent">
             <img :src="selectedContact.avatar" alt="User Avatar">
